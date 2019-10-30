@@ -8,8 +8,9 @@ import MainLayout from '../ui/MainLayout';
 import UserCard from '../ui/UserCard';
 import Grid from '@material-ui/core/Grid';
 import CircularProgress from '@material-ui/core/CircularProgress';
+import Typography from '@material-ui/core/Typography';
 
-const Users = ({ actions, users = [], loading }) => {
+const Users = ({ actions, users = [], loading, error }) => {
   useEffect(() => {
     const { getUsers } = actions;
 
@@ -30,6 +31,7 @@ const Users = ({ actions, users = [], loading }) => {
           </Grid>
         ))}
       </Grid>
+      {error && <Typography align="center" variant="h5" color="secondary">{error}</Typography>}
     </MainLayout>
   );
 };
@@ -43,11 +45,12 @@ Users.propTypes = {
 };
 
 function mapStateToProps(state) {
-  const { loading, users } = state.users;
+  const { loading, users, error } = state.users;
 
   return {
     loading,
     users,
+    error,
   };
 }
 
