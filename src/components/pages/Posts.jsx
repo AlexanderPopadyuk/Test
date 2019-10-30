@@ -13,7 +13,7 @@ import NavBar from '../ui/NavBar';
 import AddPost from '../ui/AddPost';
 
 const Posts = ({ actions, selectedUser, posts = [], loading, match }) => {
-  const userId = match.params.userId;
+  const userId = parseInt(match.params.userId);
 
   useEffect(() => {
     const { getUserPosts, getUser } = actions;
@@ -46,6 +46,10 @@ const Posts = ({ actions, selectedUser, posts = [], loading, match }) => {
 };
 
 Posts.propTypes = {
+  actions: PropTypes.shape({
+    getUser: PropTypes.func,
+    getUserPosts: PropTypes.func,
+  }),
   loading: PropTypes.bool,
   selectedUser: ExtendedPropTypes.user,
   posts: PropTypes.arrayOf(ExtendedPropTypes.post),

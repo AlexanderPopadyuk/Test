@@ -26,6 +26,12 @@ const useStyles = makeStyles({
     justifySelf: 'flex-end',
     marginLeft: 'auto',
   },
+  title: {
+    textOverflow: 'ellipsis',
+    whiteSpace: 'nowrap',
+    maxWidth: '80%',
+    overflow: 'hidden',
+  }
 });
 
 const PostCard = ({ actions, post }) => {
@@ -49,7 +55,7 @@ const PostCard = ({ actions, post }) => {
         <Button onClick={handleDelete}>
           {actionInProgress ? <CircularProgress /> : <Icon>delete</Icon>}
         </Button>
-        <Typography component="span">{post.title}</Typography>
+        <Typography component="span" className={classes.title}>{post.title}</Typography>
         <Link to={`/user/${post.userId}/${post.id}`} className={classes.detailsIcon}>
           <Icon>arrow_forward_ios</Icon>
         </Link>
@@ -62,10 +68,6 @@ PostCard.propTypes = {
   post: ExtendedPropTypes.post,
 };
 
-function mapStateToProps(state) {
-  return {};
-}
-
 function mapDispatchToProps(dispatch) {
   return {
     actions: bindActionCreators({
@@ -75,4 +77,4 @@ function mapDispatchToProps(dispatch) {
   };
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(PostCard);
+export default connect(null, mapDispatchToProps)(PostCard);

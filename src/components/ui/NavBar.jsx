@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { makeStyles } from '@material-ui/core';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
@@ -29,6 +30,12 @@ const NavBar = ({ backLink, title, children }) => {
       </Grid>
     </Grid>
   );
+};
+
+NavBar.propTypes = {
+  backLink: PropTypes.string,
+  title: PropTypes.string,
+  children: PropTypes.node,
 };
 
 export default NavBar;

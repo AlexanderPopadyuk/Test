@@ -18,8 +18,8 @@ import AddComment from '../ui/AddComment';
 
 const Post = ({ actions, selectedUser, selectedPost, comments = [], loading, match }) => {
   const [commentsVisible, setCommentsVisibility] = useState(false);
-  const userId = match.params.userId;
-  const postId = match.params.postId;
+  const userId = parseInt(match.params.userId);
+  const postId = parseInt(match.params.postId);
 
   useEffect(() => {
     const { getPost, getUser, getPostComments } = actions;
@@ -69,6 +69,11 @@ const Post = ({ actions, selectedUser, selectedPost, comments = [], loading, mat
 };
 
 Post.propTypes = {
+  actions: PropTypes.shape({
+    getUser: PropTypes.func,
+    getPost: PropTypes.func,
+    getPostComments: PropTypes.func,
+  }),
   loading: PropTypes.bool,
   selectedUser: ExtendedPropTypes.user,
   selectedPost: ExtendedPropTypes.post,

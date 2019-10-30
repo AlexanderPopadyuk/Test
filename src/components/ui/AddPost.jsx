@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
+import PropTypes from 'prop-types';
 import { Formik, Form } from 'formik';
 import * as Yup from 'yup';
 import { FormikTextField } from 'formik-material-fields';
@@ -29,7 +30,7 @@ const AddPost = ({ userId, actions }) => {
   const submit = values => {
     const { addPost, getUserPosts } = actions;
     const post = {
-      userId: parseInt(userId),
+      userId,
       ...values,
     };
 
@@ -61,44 +62,51 @@ const AddPost = ({ userId, actions }) => {
               .required("Body is required"),
           })}
           onSubmit={submit}
-          render={() => (
-            <Form>
-              <DialogContent>
-                <FormikTextField
-                  autoFocus
-                  margin="dense"
-                  id="title"
-                  name="title"
-                  label="Title"
-                  type="text"
-                  fullWidth
-                  variant="outlined"
-                />
-                <FormikTextField
-                  margin="dense"
-                  id="body"
-                  name="body"
-                  label="Body"
-                  fullWidth
-                  multiline
-                  rows="4"
-                  variant="outlined"
-                />
-              </DialogContent>
-              <DialogActions>
-                <Button onClick={handleClose}>
-                  Cancel
-                </Button>
-                <Button type="submit" color="primary">
-                  {actionInProgress ? <CircularProgress /> : 'Add post'}
-                </Button>
-              </DialogActions>
-            </Form>
-          )}
-        />
+        >
+          <Form>
+            <DialogContent>
+              <FormikTextField
+                autoFocus
+                margin="dense"
+                id="title"
+                name="title"
+                label="Title"
+                type="text"
+                fullWidth
+                variant="outlined"
+              />
+              <FormikTextField
+                margin="dense"
+                id="body"
+                name="body"
+                label="Body"
+                fullWidth
+                multiline
+                rows="4"
+                variant="outlined"
+              />
+            </DialogContent>
+            <DialogActions>
+              <Button onClick={handleClose}>
+                Cancel
+              </Button>
+              <Button type="submit" color="primary">
+                {actionInProgress ? <CircularProgress /> : 'Add post'}
+              </Button>
+            </DialogActions>
+          </Form>
+        </Formik>
       </Dialog>
     </>
   )
+};
+
+AddPost.propTypes = {
+  userId: PropTypes.number.isRequired,
+  actions: PropTypes.shape({
+    addPost: PropTypes.func,
+    getUserPosts: PropTypes.func,
+  }),
 };
 
 function mapDispatchToProps(dispatch) {

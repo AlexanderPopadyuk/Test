@@ -35,6 +35,9 @@ const Users = ({ actions, users = [], loading }) => {
 };
 
 Users.propTypes = {
+  actions: PropTypes.shape({
+    getUsers: PropTypes.func,
+  }),
   users: PropTypes.arrayOf(ExtendedPropTypes.user),
   loading: PropTypes.bool,
 };

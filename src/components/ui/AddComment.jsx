@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
+import PropTypes from 'prop-types';
 import { Formik, Form } from 'formik';
 import * as Yup from 'yup';
 import { FormikTextField } from 'formik-material-fields';
@@ -28,7 +29,7 @@ const AddComment = ({ postId, actions }) => {
   const submit = values => {
     const { addComment, getPostComments } = actions;
     const post = {
-      postId: parseInt(postId),
+      postId,
       ...values,
     };
 
@@ -62,53 +63,60 @@ const AddComment = ({ postId, actions }) => {
               .required("Body is required"),
           })}
           onSubmit={submit}
-          render={() => (
-            <Form>
-              <DialogContent>
-                <FormikTextField
-                  autoFocus
-                  margin="dense"
-                  id="name"
-                  name="name"
-                  label="Name"
-                  type="text"
-                  fullWidth
-                  variant="outlined"
-                />
-                <FormikTextField
-                  margin="dense"
-                  id="email"
-                  name="email"
-                  label="Email"
-                  type="email"
-                  fullWidth
-                  variant="outlined"
-                />
-                <FormikTextField
-                  margin="dense"
-                  id="body"
-                  name="body"
-                  label="Body"
-                  fullWidth
-                  multiline
-                  rows="4"
-                  variant="outlined"
-                />
-              </DialogContent>
-              <DialogActions>
-                <Button onClick={handleClose}>
-                  Cancel
-                </Button>
-                <Button type="submit" color="primary">
-                  {actionInProgress ? <CircularProgress /> : 'Add comment'}
-                </Button>
-              </DialogActions>
-            </Form>
-          )}
-        />
+        >
+          <Form>
+            <DialogContent>
+              <FormikTextField
+                autoFocus
+                margin="dense"
+                id="name"
+                name="name"
+                label="Name"
+                type="text"
+                fullWidth
+                variant="outlined"
+              />
+              <FormikTextField
+                margin="dense"
+                id="email"
+                name="email"
+                label="Email"
+                type="email"
+                fullWidth
+                variant="outlined"
+              />
+              <FormikTextField
+                margin="dense"
+                id="body"
+                name="body"
+                label="Body"
+                fullWidth
+                multiline
+                rows="4"
+                variant="outlined"
+              />
+            </DialogContent>
+            <DialogActions>
+              <Button onClick={handleClose}>
+                Cancel
+              </Button>
+              <Button type="submit" color="primary">
+                {actionInProgress ? <CircularProgress /> : 'Add comment'}
+              </Button>
+            </DialogActions>
+          </Form>
+        </Formik>
       </Dialog>
     </>
   )
+};
+
+AddComment.propTypes = {
+  postId: PropTypes.number.isRequired,
+  actions: PropTypes.shape({
+    addComment: PropTypes.func,
+    getPostComments: PropTypes.func,
+  }),
 };
 
 function mapDispatchToProps(dispatch) {
